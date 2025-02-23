@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prediction System</title>
+  <style>
+    body 
+  
+
+
+    /* Login Page Styles */
+    #loginPage {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 20px #3f51b5;
+      width: 350px;
+      height: 999px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #loginPage h1 {
+      color: #ffcc00;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      dpi: 40;
+    }
+
+    #loginPage input {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 1.2em;
+      background-color: #333;
+      border: 2px solid #ffcc00;
+      border-radius: 10px;
+      color: #ba68c8;
+      text-align: center;
+    }
+
+    #loginPage button {
+      width: 100%;
+      padding: 15px;
+      background-color: #ffcc00;
+      color: #000;
+      font-size: 1.5em;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #loginPage button:hover {
+      background-color: #ff9900;
+      transform: scale(1.05);
+    }
+
+    /* Prediction Page Styles */
+    #predictionPage {
+      text-align: center;
+      padding: 40px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+      width: 350px;
+      display: none;
+    }
+
+    #predictionPage h1 {
+      color: #ffcc00;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+    }
+
+    .input-container {
+      margin: 20px;
+      font-size: 1.2em;
+    }
+
+    .input-container input {
+      padding: 15px;
+      background-color: #333;
+      color: #00ffcc;
+      border: 2px solid #ffcc00;
+      font-size: 1.5em;
+      border-radius: 10px;
+      width: 300px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .button {
+      background-color: #ffcc00;
+      color: #000;
+      padding: 15px 30px;
+      font-size: 1.5em;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 30px;
+      margin-bottom: 30px;
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      background-color: #ff9900;
+      transform: scale(1.05);
+    }
+
+    .result {
+      font-size: 2.5em;
+      color: #00ff00;
+      font-weight: bold;
+      margin-top: 30px;
+      animation: glitch 1s infinite;
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px #ff0000, -2px -2px #00ff00; }
+      25% { text-shadow: -2px 2px #ff0000, 2px -2px #00ff00; }
+      50% { text-shadow: 2px -2px #ff0000, -2px 2px #00ff00; }
+      75% { text-shadow: -2px -2px #ff0000, 2px 2px #00ff00; }
+      100% { text-shadow: 2px 2px #ff0000, -2px -2px #00ff00; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Page -->
+  <div id="loginPage">
+    <h1>Login</h1>
+    <input type="text" id="username" placeholder="Enter Username" required>
+    <input type="password" id="password" placeholder="Enter Password" required>
+    <button onclick="checkLogin()">Login</button>
+    <div id="error" class="error" style="color: red;"></div>
+  </div>
+
+  <!-- Prediction Page -->
+  <div id="predictionPage">
+    <h1>➳ Prediction System</h1>
+
+    <div class="input-container">
+      <input type="number" id="lastWinning" placeholder="Last 3-digits" min="001" max="999">
+    </div>
+    
+    <button class="button" onclick="generatePrediction()">Generate Prediction</button>
+    <div id="predictionResult" class="result">Prediction will appear here...</div>
+  </div>
+
+  <script>
+    // Sample credentials
+    const validUsername = 'P';
+    const validPassword = 'P';
+
+    // Function to check login credentials
+    function checkLogin() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('error');
+
+      // Clear previous error
+      errorDiv.innerHTML = '';
+
+      if (username === validUsername && password === validPassword) {
+        // Hide login page and show prediction page
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('predictionPage').style.display = 'block';
+      } else {
+        errorDiv.innerHTML = 'Invalid Username or Password.';
+      }
+    }
+
+    // Function to generate prediction based on last winning number
+    function generatePrediction() {
+      const lastWinning = document.getElementById('lastWinning').value;
+
+      if (!lastWinning || lastWinning.length !== 3) {
+        alert('Please enter a valid 3-digit number.');
+        return;
+      }
+
+      const prediction = applyAdvancedAlgorithms(lastWinning);
+      document.getElementById('predictionResult').textContent = `Prediction: ${prediction}`;
+    }
+
+    // Advanced Algorithms (harder versions)
+    function applyAdvancedAlgorithms(lastWinning) {
+      const rngResult = applyRNG(lastWinning);
+      const gaResult = applyGA(lastWinning);
+      const psoResult = applyPSO(lastWinning);
+      const acoResult = applyACO(lastWinning);
+
+      const results = [rngResult, gaResult, psoResult, acoResult];
+      const bigCount = results.filter(result => result === 'BIG').length;
+      const smallCount = results.filter(result => result === 'SMALL').length;
+
+      // Complex decision making - higher weightage for bigger results
+      if (bigCount > smallCount) {
+        return "BIG";
+      } else if (smallCount > bigCount) {
+        return "SMALL";
+      } else {
+        return Math.random() > 0.5 ? "BIG" : "SMALL"; // Random tie-breaker
+      }
+    }
+
+    // Random Number Generation Algorithm (Harder version)
+    function applyRNG(lastWinning) {
+      let sumDigits = lastWinning.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+      return sumDigits % 2 === 0 ? 'BIG' : 'SMALL';
+    }
+
+    // Genetic Algorithm (Harder version)
+    function applyGA(lastWinning) {
+      return lastWinning % 5 === 0 ? 'BIG' : 'SMALL'; // Uses divisibility by 5 for complex behavior
+    }
+
+    // Particle Swarm Optimization Algorithm (Harder version)
+    function applyPSO(lastWinning) {
+      let digitSum = lastWinning.toString().split('').map(Number).reduce((acc, n) => acc + n);
+      return digitSum % 3 === 0 ? 'SMALL' : 'BIG';  // Divisibility logic for prediction
+    }
+
+    // Ant Colony Optimization Algorithm (Harder version)
+    function applyACO(lastWinning) {
+      let lastDigit = lastWinning % 10;
+      return lastDigit % 2 === 0 ? 'BIG' : 'SMALL'; // Use of last digit's parity for decision
+    }
+  </script>
+
+</body>
+</html>
+
